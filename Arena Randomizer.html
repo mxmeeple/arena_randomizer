@@ -1,0 +1,337 @@
+<script>
+all_champions = [
+    "Aatrox", 
+    "Ahri", 
+    "Akali", 
+    "Akshan", 
+    "Alistar", 
+    "Amumu", 
+    "Anivia", 
+    "Annie", 
+    "Aphelios", 
+    "Ashe", 
+    "A'sol", 
+    "Azir", 
+    "Bard", 
+    "Bel'veth", 
+    "Blitzcrank", 
+    "Brand", 
+    "Braum ", 
+    "Briar", 
+    "Caitlyn", 
+    "Camile", 
+    "Cassiopeia", 
+    "Cho'Gath", 
+    "Corki", 
+    "Darius", 
+    "Diana", 
+    "Draven", 
+    "Dr. Mundo", 
+    "Ekko", 
+    "Elise", 
+    "Evelynn", 
+    "Ezreal", 
+    "Fiddlesticks", 
+    "Fiora", 
+    "Fizz", 
+    "Galio", 
+    "Gangplank", 
+    "Garen", 
+    "Gnar", 
+    "Gragas", 
+    "Graves", 
+    "Gwen", 
+    "Hecarim", 
+    "Heimerdinger", 
+    "Hwei", 
+    "Illaoi", 
+    "Irelia", 
+    "Ivern", 
+    "Janna", 
+    "Jarvan IV", 
+    "Jax", 
+    "Jayce", 
+    "Jhin", 
+    "Jinx", 
+    "Kaisa", 
+    "Kalista", 
+    "Karma", 
+    "Karthus", 
+    "Kassadin", 
+    "Katarina", 
+    "Kayle", 
+    "Kayne", 
+    "Kennenn", 
+    "Kha'Zix", 
+    "Kindred", 
+    "Kled", 
+    "Kogmaw", 
+    "K'sante", 
+    "LeBlanc", 
+    "Lee Sin", 
+    "Leona", 
+    "Lillia", 
+    "Lissandra", 
+    "Lucian", 
+    "Lulu", 
+    "Lux", 
+    "Malphite", 
+    "Malzahar", 
+    "Maoki", 
+    "Master Yi", 
+    "Milio", 
+    "Miss Fortune", 
+    "Mordekaiser", 
+    "Morgana", 
+    "Naafiri", 
+    "Nami", 
+    "Nasus", 
+    "Nautilus", 
+    "Neeko", 
+    "Nidaliee", 
+    "Nilah", 
+    "Nocturne", 
+    "Nunu & Willump", 
+    "Olaf", 
+    "Orianna", 
+    "Ornn", 
+    "Pantheon", 
+    "Poppy", 
+    "Pyke", 
+    "Quiyana", 
+    "Quinn", 
+    "Rakan", 
+    "Rammus", 
+    "Rek'sai", 
+    "Rell", 
+    "Renata Glasc", 
+    "Renekton", 
+    "Rengar", 
+    "Riven", 
+    "Rumble", 
+    "Ryze", 
+    "Samira", 
+    "Sejuani", 
+    "Senna", 
+    "Seraphine", 
+    "Sett", 
+    "Shaco", 
+    "Shen", 
+    "Shyvana", 
+    "Singed", 
+    "Sion", 
+    "Sivir", 
+    "Skarner", 
+    "Sona", 
+    "Soraka", 
+    "Swain", 
+    "Sylas", 
+    "Syndra", 
+    "Tahm Kench", 
+    "Taliyah", 
+    "Talon", 
+    "Taric", 
+    "Teemo", 
+    "Thresh", 
+    "Tristana", 
+    "Trundle", 
+    "Tryndamere", 
+    "Twisted Fate", 
+    "Twitch", 
+    "Udgr", 
+    "Urgot", 
+    "Varus", 
+    "Vayne", 
+    "Viegar", 
+    "Velkoz", 
+    "Vex", 
+    "Viegar", 
+    "Viego", 
+    "Viktor", 
+    "Vladimir", 
+    "Volibear", 
+    "Warwik", 
+    "Wukong", 
+    "Xayan", 
+    "Xerath", 
+    "Xin Zhao", 
+    "Yasuo", 
+    "Yone", 
+    "Yorik", 
+    "Yuumi", 
+    "Zac", 
+    "Zed", 
+    "Zeri", 
+    "Ziggs", 
+    "Zilean", 
+    "Zoe", 
+    "Zyra"
+    ]
+
+available_champs = shuffle([...all_champions])
+
+function run(){
+    player_champions = Array(8).fill(0)
+
+    generateChampions(player_champions, available_champs)
+    writeToHTML(player_champions)
+
+
+    function generateChampions(player_champions, available_champs){
+      for (let i = 0; i < player_champions.length; i ++) {
+        rerollPlayer(player_champions, i, available_champs)
+      }
+    }
+
+    function rerollPlayer(player_champions, player_index, available_champs){
+        let count = document.getElementById(`optionCountInput`).value;
+        let text = ""
+        for(let i = 0; i < count; i++){
+          text +=  getNewChampion(available_champs) + ", "
+        }
+        text = text.slice(0, text.length - ", ".length)
+        player_champions[player_index] = text
+    }
+
+    function getNewChampion(available_champs){
+        let max = available_champs.length
+        let index = Math.floor(Math.random() * max);
+        let champion = available_champs.splice(index, 1)
+        return champion[0];
+    }
+
+    function writeToHTML(player_champions){
+        for (let i = 0; i < player_champions.length; i ++) {
+            document.getElementById(`player_${i}`).innerHTML = player_champions[i]
+        }
+    }
+
+}
+function randomizeTeams(){
+
+  player_array = Array(8).fill(0)
+  readPlayers(player_array)
+  shuffle(player_array)
+  writePlayers(player_array)
+
+  function readPlayers(player_array){
+    for (let i = 0; i < player_array.length; i ++) {
+      player_array[i] = document.getElementById(`player_${i}_name_input`).value
+    }
+  }
+
+  function writePlayers(player_array){    
+    for (let i = 0; i < player_array.length; i ++) {
+      document.getElementById(`player_${i}_name`).innerHTML = player_array[i]
+    }
+  }
+
+}
+
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex > 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+</script>
+
+
+
+<style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Create two equal columns that floats next to each other */
+    .column {
+      float: left;
+      width: 50%;
+      padding: 10px;
+    }
+    
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: DarkSalmon;
+  color: white;
+}
+</style>
+</div>
+    <div class="row">
+      <div class="column" style="background-color:#aaa;">
+        <input type="text" placeholder="Player 1" id="player_0_name_input">
+        <input type="text" placeholder="Player 2" id="player_1_name_input">
+      </div>
+      <div class="column" style="background-color:#bbb;">
+        <input type="text" placeholder="Player 3" id="player_2_name_input">
+        <input type="text" placeholder="Player 4" id="player_3_name_input">
+      </div>
+    </div>
+    
+    <div class="row">
+        <div class="column" style="background-color:#bbb;">
+          <input type="text" placeholder="Player 5" id="player_4_name_input">
+          <input type="text" placeholder="Player 6" id="player_5_name_input">
+        </div>
+        <div class="column" style="background-color:#aaa;">
+          <input type="text" placeholder="Player 7" id="player_6_name_input">
+          <input type="text" placeholder="Player 8" id="player_7_name_input">
+        </div>
+      </div>
+</div>
+<br>
+</div>
+    <div class="row">
+      <div class="column" style="background-color:#aaa;">
+        <p><span id="player_0_name">Player 1</span>: <span id="player_0"></span></p>
+        <p><span id="player_1_name">Player 2</span>: <span id="player_1"></span></p> 
+      </div>
+      <div class="column" style="background-color:#bbb;">
+        <p><span id="player_2_name">Player 3</span>: <span id="player_2"></span></p>
+        <p><span id="player_3_name">Player 4</span>: <span id="player_3"></span></p> 
+      </div>
+    </div>
+    
+    <div class="row">
+        <div class="column" style="background-color:#bbb;">
+        <p><span id="player_4_name">Player 5</span>: <span id="player_4"></span></p>
+        <p><span id="player_5_name">Player 6</span>: <span id="player_5"></span></p>
+        </div>
+        <div class="column" style="background-color:#aaa;">
+        <p><span id="player_6_name">Player 7</span>: <span id="player_6"></span></p>
+        <p><span id="player_7_name">Player 8</span>: <span id="player_7"></span></p>
+        </div>
+      </div>
+</div>
+<br>
+<div class="row">
+  <span>Champion Options: <input type="number" value="3" id="optionCountInput"></span>
+  <button onclick="run()">Randomize Champions</button>
+  <button onclick="randomizeTeams()">Randomize Player Teams</button>
+</div>
+<br>
+<br>
+<br>
+<footer>
+  <p>Version 4 - Author: mxMeeple</p>
+  <p><a href="https://github.com/mxmeeple" target="_blank">Github</a></p>
+</footer>
